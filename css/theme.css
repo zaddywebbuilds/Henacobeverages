@@ -159,7 +159,7 @@ h1, h2, h3, h4 {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  padding: 0 0 clamp(2rem, 4vw, 3.5rem);
+  padding: 0 0 clamp(1.4rem, 2.6vw, 2.4rem);
   background:
     radial-gradient(ellipse 70% 55% at 18% 12%, #FFE9D8 0%, transparent 62%),
     radial-gradient(ellipse 65% 55% at 88% 78%, #F7D3D6 0%, transparent 60%),
@@ -424,7 +424,7 @@ h1, h2, h3, h4 {
 /* ============================================================
    SECTIONS — flush, alternating warmth
    ============================================================ */
-.section { padding: clamp(3.2rem, 6.5vw, 6rem) 0; position: relative; }
+.section { padding: clamp(2.1rem, 4vw, 3.5rem) 0; position: relative; }
 .section-cream { background: var(--c-cream); }
 .section-deep {
   background:
@@ -433,7 +433,7 @@ h1, h2, h3, h4 {
     var(--c-cream-deep);
 }
 
-.section-head { max-width: 62ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.section-head { max-width: 62ch; margin-bottom: clamp(1.3rem, 2.4vw, 2rem); }
 .section-head.center { margin-inline: auto; text-align: center; }
 .section-head h2 { font-size: clamp(2rem, 4.4vw, 3.4rem); margin-top: .7rem; }
 .section-head h2 .glow {
@@ -443,7 +443,7 @@ h1, h2, h3, h4 {
 }
 .section-head p { margin-top: .9rem; color: var(--c-ink-soft); font-size: clamp(.95rem, 1.15vw, 1.04rem); }
 
-.grid { display: grid; gap: 1.4rem; }
+.grid { display: grid; gap: 1.1rem; }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .grid-4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -451,7 +451,7 @@ h1, h2, h3, h4 {
 /* ============================================================
    PRODUCT CARDS
    ============================================================ */
-.prod-grid { grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 1.5rem; }
+.prod-grid { grid-template-columns: repeat(auto-fit, minmax(252px, 1fr)); gap: 1.1rem; }
 
 .prod {
   position: relative;
@@ -788,7 +788,7 @@ h1, h2, h3, h4 {
 .cta-strip {
   position: relative;
   overflow: hidden;
-  padding: clamp(3rem, 6.5vw, 5.2rem) clamp(1.5rem, 5vw, 4rem);
+  padding: clamp(2.4rem, 4.6vw, 3.8rem) clamp(1.5rem, 5vw, 4rem);
   text-align: center;
   background:
     radial-gradient(ellipse 80% 100% at 50% 0%, rgba(23,99,214,.55) 0%, transparent 65%),
@@ -809,7 +809,7 @@ h1, h2, h3, h4 {
    FOOTER — flush dark, grounds the page
    ============================================================ */
 .foot {
-  padding: clamp(3rem, 5.5vw, 4.5rem) 0 7rem;
+  padding: clamp(2.2rem, 4vw, 3.2rem) 0 7rem;
   background: var(--c-navy-deep);
   color: rgba(255,255,255,.72);
 }
@@ -839,7 +839,7 @@ h1, h2, h3, h4 {
 .foot li a:hover, .foot address a:hover { color: var(--c-gold-bright); }
 .foot address { font-style: normal; font-size: .86rem; color: rgba(255,255,255,.72); display: grid; gap: .5rem; }
 .foot-bottom {
-  margin-top: 2.6rem;
+  margin-top: 1.8rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255,255,255,.12);
   display: flex;
@@ -978,3 +978,237 @@ h1, h2, h3, h4 {
   .reveal { opacity: 1; transform: none; }
   .marquee-track { animation: none; }
 }
+
+/* ============================================================
+   AGE GATE — 18+ confirmation
+   Content stays in the DOM behind it so crawlers still index.
+   ============================================================ */
+.age-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+  background: rgba(5, 11, 31, .82);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.age-card {
+  width: min(100%, 430px);
+  text-align: center;
+  padding: 2.2rem 1.8rem 1.8rem;
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, var(--c-cream), var(--c-cream-deep));
+  border: 1px solid var(--c-glass-border);
+  box-shadow: var(--sh-deep);
+}
+.age-card img { height: 62px; width: auto; margin: 0 auto 1rem; }
+.age-card h2 { font-size: 1.85rem; }
+.age-card p { margin-top: .6rem; font-size: .9rem; color: var(--c-ink-soft); }
+.age-card .btn-row { justify-content: center; margin-top: 1.4rem; }
+.age-card small { display: block; margin-top: 1.1rem; font-size: .72rem; color: var(--c-ink-dim); }
+.age-deny { font-size: .92rem; color: var(--c-ink-soft); }
+body.age-locked { overflow: hidden; }
+
+/* ============================================================
+   PRODUCT CARD LINKS
+   ============================================================ */
+.prod h3 a.prod-link { color: inherit; }
+.prod h3 a.prod-link:hover { color: var(--c-blue-deep); }
+.prod-more {
+  display: inline-block;
+  margin-top: .7rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--c-blue-deep);
+  transform: translateZ(18px);
+}
+.prod-more:hover { color: var(--c-gold-deep); }
+
+/* ============================================================
+   PRODUCT PAGE
+   ============================================================ */
+.hero-slim { padding-bottom: clamp(2rem, 4vw, 3rem); }
+
+.crumbs {
+  position: relative;
+  z-index: 5;
+  width: min(100% - 2.5rem, var(--maxw));
+  margin: .2rem auto .4rem;
+  font-size: .76rem;
+  color: var(--c-ink-dim);
+}
+.crumbs a { color: var(--c-ink-soft); }
+.crumbs a:hover { color: var(--c-blue-deep); }
+.crumbs span { margin: 0 .4rem; opacity: .55; }
+.crumbs em { font-style: normal; color: var(--c-ink); font-weight: 600; }
+
+.pp-stage {
+  position: relative;
+  z-index: 4;
+  width: min(100% - 2.5rem, var(--maxw));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  padding-top: clamp(.5rem, 2vw, 1.2rem);
+}
+.pp-media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem 2.6rem;
+  border-radius: var(--r-xl);
+  background: linear-gradient(170deg, rgba(255,255,255,.85), rgba(255,255,255,.35));
+  border: 1px solid var(--c-glass-border);
+  box-shadow: var(--sh-glass);
+}
+.pp-media::before {
+  content: "";
+  position: absolute; inset: -10%;
+  z-index: -1;
+  background: radial-gradient(circle, rgba(46,140,255,.2) 0%, rgba(201,169,97,.16) 45%, transparent 70%);
+  filter: blur(45px);
+}
+.pp-media::after {
+  content: "";
+  position: absolute;
+  bottom: 30px; left: 50%;
+  width: 58%; height: 20px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(120,70,50,.34) 0%, transparent 72%);
+  filter: blur(7px);
+}
+.pp-media img {
+  max-height: min(60vh, 460px);
+  width: auto;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 20px 34px rgba(120,70,50,.34));
+}
+
+.pp-body .kind {
+  display: block;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--c-gold-deep);
+  margin-bottom: .5rem;
+}
+.pp-body h1 { font-size: clamp(2.3rem, 5vw, 4.2rem); line-height: .96; }
+.pp-lede { margin-top: 1rem; max-width: 46ch; font-size: clamp(1rem, 1.2vw, 1.12rem); color: var(--c-ink-soft); }
+.pp-body .prod-spec { margin-top: 1.1rem; }
+.pp-body .btn-row { margin-top: 1.5rem; }
+.pp-body .hero-proof { margin-top: 1.6rem; }
+
+.pp-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, .85fr);
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: start;
+}
+.pp-prose h2 { font-size: clamp(1.7rem, 3.2vw, 2.5rem); margin-bottom: 1rem; }
+.pp-prose p { color: var(--c-ink-soft); margin-bottom: 1rem; font-size: .98rem; }
+.pp-extra {
+  margin-top: 1.6rem;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: rgba(255,255,255,.7);
+  border: 1px solid var(--c-glass-border);
+  box-shadow: var(--sh-soft);
+  padding: 1.4rem;
+  text-align: center;
+}
+.pp-extra img { max-height: 300px; width: auto; margin: 0 auto; filter: drop-shadow(0 14px 24px rgba(120,70,50,.28)); }
+.pp-extra figcaption { margin-top: .9rem; font-size: .82rem; color: var(--c-ink-dim); }
+
+.pp-aside {
+  position: sticky;
+  top: 1.5rem;
+  padding: 1.7rem 1.5rem;
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, #FFF8EA, rgba(255,255,255,.85));
+  border: 1px solid rgba(201,169,97,.55);
+  box-shadow: var(--sh-gold);
+}
+.pp-aside h3 { font-size: 1.3rem; margin-bottom: .9rem; }
+.pp-sells { list-style: none; display: grid; gap: .55rem; margin-bottom: 1.3rem; }
+.pp-sells li { position: relative; padding-left: 1.5rem; font-size: .88rem; color: var(--c-ink-soft); }
+.pp-sells li::before {
+  content: "";
+  position: absolute; left: 0; top: .55em;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--c-gold-bright);
+  box-shadow: 0 0 0 3px rgba(232,184,75,.25);
+}
+.pp-aside .btn { width: 100%; }
+.pp-note { margin-top: .9rem; font-size: .76rem; color: var(--c-ink-dim); }
+
+/* related products */
+.rel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
+.rel-card {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  padding: 1.2rem .8rem 1rem;
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,.75);
+  border: 1px solid var(--c-glass-border);
+  box-shadow: var(--sh-soft);
+  transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, border-color .3s;
+}
+.rel-card:hover { transform: translateY(-6px); box-shadow: var(--sh-glass); border-color: rgba(201,169,97,.6); }
+.rel-card img {
+  height: 150px; width: auto; object-fit: contain;
+  margin-bottom: .8rem;
+  filter: drop-shadow(0 10px 18px rgba(120,70,50,.28));
+}
+.rel-kind { font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--c-gold-deep); }
+.rel-name { font-family: var(--serif); font-size: 1.08rem; font-weight: 600; color: var(--c-ink); margin-top: .15rem; }
+
+@media (max-width: 1050px) {
+  .pp-stage { grid-template-columns: 1fr; }
+  .pp-media { order: 1; }
+  .pp-body { order: 2; }
+  .pp-cols { grid-template-columns: 1fr; }
+  .pp-aside { position: static; }
+}
+@media (max-width: 720px) {
+  .pp-media img { max-height: 300px; }
+  .rel-card img { height: 118px; }
+}
+
+
+/* ============================================================
+   WHY CARDS WITH REAL MEDIA
+   ============================================================ */
+.why.has-media { padding: 0 0 1.4rem; overflow: hidden; }
+.why-media {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  margin-bottom: 1.1rem;
+  background: var(--c-sand);
+}
+.why-media img,
+.why-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.why.has-media:hover .why-media img,
+.why.has-media:hover .why-media video { transform: scale(1.045); }
+/* hairline so the media never floats free of the card edge */
+.why-media::after {
+  content: "";
+  position: absolute; inset: 0;
+  box-shadow: inset 0 -1px 0 rgba(160,110,80,.22);
+  pointer-events: none;
+}
+.why.has-media h3,
+.why.has-media p { padding-inline: 1.5rem; }

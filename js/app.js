@@ -303,4 +303,96 @@
       play();
     }
   }
+
+  /* ---------- 7. AGE GATE (18+) --------------------------------
+     The page content stays in the DOM behind the overlay, so search
+     engines still index everything. Remembered per browser. */
+  var gate = document.getElementById("ageGate");
+  if (gate) {
+    var OK = "henaco_age_ok";
+    var passed = false;
+    try { passed = localStorage.getItem(OK) === "1"; } catch (e) {}
+    if (!passed) {
+      gate.hidden = false;
+      document.body.classList.add("age-locked");
+      gate.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-age]");
+        if (!b) return;
+        if (b.getAttribute("data-age") === "yes") {
+          try { localStorage.setItem(OK, "1"); } catch (e2) {}
+          gate.hidden = true;
+          document.body.classList.remove("age-locked");
+          track("age_gate", "accept");
+        } else {
+          gate.querySelector(".age-card").innerHTML =
+            '<h2>Come back when you are 18.</h2>' +
+            '<p class="age-deny">You must be 18 or over to buy alcohol in Nigeria. ' +
+            'Thank you for being honest.</p>';
+          track("age_gate", "decline");
+        }
+      });
+    }
+  }
+
+  /* ---------- 8. CONVERSION TRACKING ---------------------------
+     Every WhatsApp click and phone tap is pushed to dataLayer and,
+     if a measurement ID is set below, straight into GA4.
+
+     TO SWITCH ON: put your GA4 ID in GA_ID (looks like "G-XXXXXXX").
+     Leave it empty and nothing loads — no tags, no cookies, no
+     third-party requests. */
+  var GA_ID = "";
+
+  window.dataLayer = window.dataLayer || [];
+  function track(action, label) {
+    window.dataLayer.push({ event: "henaco_" + action, label: label });
+    if (window.gtag) window.gtag("event", action, { event_label: label });
+  }
+
+  if (GA_ID) {
+    var g = document.createElement("script");
+    g.async = true;
+    g.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    document.head.appendChild(g);
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", GA_ID);
+  }
+
+  /* label each CTA by what it is selling, so the report tells you
+     which product actually starts conversations */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("a");
+    if (!a || !a.href) return;
+    if (a.href.indexOf("wa.me") === 0 || a.href.indexOf("https://wa.me") === 0) {
+      var msg = a.getAttribute("data-wa") || "";
+      track("whatsapp_click", msg.slice(0, 90) || a.textContent.trim());
+    } else if (a.href.indexOf("tel:") === 0) {
+      track("call_click", a.textContent.trim() || a.href);
+    }
+  }, true);
+
+  /* ---------- 9. CARD VIDEOS ----------------------------------
+     The delivery-van loop only loads once it scrolls into view, and
+     pauses when it leaves — so nobody on mobile data pays for a clip
+     they never saw. Save-Data / 2G keeps the poster instead. */
+  var cardVids = document.querySelectorAll(".why-media video");
+  if (cardVids.length) {
+    var conn = navigator.connection || {};
+    var cheap = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || "");
+    if (!cheap && !REDUCED && "IntersectionObserver" in window) {
+      var vo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var v = en.target;
+          if (en.isIntersecting) {
+            if (v.preload !== "auto") { v.preload = "auto"; v.load(); }
+            v.play().catch(function () {});
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold: 0.25 });
+      cardVids.forEach(function (v) { vo.observe(v); });
+    }
+  }
 })();
