@@ -18,12 +18,26 @@ no framework. It can be dropped on GitHub Pages, Netlify, cPanel, anywhere.
 index.html              the whole page
 css/theme.css           design system (brand colours, glass, 3D, responsive)
 js/app.js               WhatsApp links, hero vortex, tilt, reveals, demo chat
+images/brand/*.webp     Henaco logo mark, lifted off the company banner
+                        (blue for light backgrounds, ivory for the footer)
 images/products/*.webp  bottles cut out to transparent PNG->WebP
 images/scenes/*.webp    the company banner + "Refresh Your Moment" posters
 images/raw/             the original phone photos + full-size PNG cutouts
 video/hero-vortex.mp4   compressed hero loop (2.7 MB, was 19.8 MB)
 video/holetrack.json    tracked vanishing point of the video, for reference
 ```
+
+## Design
+
+Warm cream ground (taken from the reference studio site) carrying Henaco's own
+blue and gold. Sections run **edge to edge with no gaps** — verified: every
+inter-section gap measures 0px.
+
+The hero is split: the neon tunnel sits in a dark rounded panel on the **left**,
+the pitch sits on the **right**. The flying bottles are clipped inside that panel,
+so they can never wash across the copy. Below 1050px the two stack, copy first.
+
+All body text passes WCAG AA contrast (>=4.5:1) on the cream ground.
 
 ## The hero animation
 

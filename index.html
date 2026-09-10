@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#060D24" />
+<meta name="theme-color" content="#F4E5D0" />
 <meta name="format-detection" content="telephone=yes" />
 
 <title>Henaco Beverages — Brandy, Rum, Schnapps &amp; Liqueurs Direct From Our Aba Factory</title>
@@ -61,15 +61,7 @@
      HERO — neon vortex, bottles pulled into the tunnel
      ============================================================ -->
 <header class="hero" id="top">
-  <video class="hero-video" id="heroVideo"
-         autoplay muted loop playsinline preload="none"
-         poster="video/hero-vortex-poster.jpg"
-         aria-hidden="true" tabindex="-1">
-    <source src="video/hero-vortex.mp4" type="video/mp4">
-  </video>
-
-  <!-- bottles fly into the tunnel mouth from here (built by js/app.js) -->
-  <div class="portal-layer" id="portalLayer" aria-hidden="true"></div>
+  <div class="hero-arch" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
 
   <div class="hero-bar">
     <div class="hero-bar-left">
@@ -82,8 +74,11 @@
     </div>
 
     <div class="brandmark">
-      <strong>Henaco Beverages</strong>
-      <small>Aba · Nigeria</small>
+      <img src="images/brand/henaco-mark.webp" alt="" width="132" height="276">
+      <span class="brandmark-txt">
+        <strong>Henaco Beverages</strong>
+        <small>Aba · Nigeria</small>
+      </span>
     </div>
 
     <div class="hero-bar-right">
@@ -97,7 +92,22 @@
     </div>
   </div>
 
-  <div class="hero-body">
+  <div class="hero-stage">
+
+    <!-- LEFT: the neon tunnel. Bottles are clipped inside this panel,
+         so they never wash across the copy. -->
+    <div class="hero-visual">
+      <video class="hero-video" id="heroVideo"
+             autoplay muted loop playsinline preload="none"
+             poster="video/hero-vortex-poster.jpg"
+             aria-hidden="true" tabindex="-1">
+        <source src="video/hero-vortex.mp4" type="video/mp4">
+      </video>
+      <div class="portal-layer" id="portalLayer" aria-hidden="true"></div>
+    </div>
+
+    <!-- RIGHT: the pitch -->
+    <div class="hero-body">
     <span class="eyebrow">Chill it · Pour it · Share it</span>
     <h1>Bold Taste.<br><span class="glow">Zero Compromise.</span></h1>
     <p class="sub">
@@ -120,6 +130,8 @@
       <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Delivery to every state</span>
       <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zM3 7l3-4h12l3 4M12 7v13"/></svg> Carton &amp; bulk supply</span>
     </div>
+    </div>
+
   </div>
 </header>
 
@@ -132,7 +144,7 @@
     <span><b>NAFDAC</b> registered products</span>
     <span>Blended &amp; bottled in <b>Aba, Abia State</b></span>
     <span>Delivery to <b>all 36 states + FCT</b></span>
-    <span><b>7 brands</b>, one supplier</span>
+    <span><b>7 brands,</b> one supplier</span>
     <span>Mixed cartons <b>welcome</b></span>
     <span>Bars · Lounges · Supermarkets · <b>Event planners</b></span>
   </div>
@@ -142,7 +154,7 @@
      PRODUCTS
      ============================================================ -->
 <main>
-<section class="section section-tint" id="products">
+<section class="section section-cream" id="products">
   <div class="container">
     <div class="section-head center reveal">
       <span class="eyebrow">The Henaco range</span>
@@ -250,11 +262,11 @@
     </div>
 
     <!-- water line -->
-    <div class="why reveal" style="margin-top:1.5rem; display:flex; flex-wrap:wrap; align-items:center; gap:1.2rem; justify-content:space-between;">
-      <div style="flex:1 1 320px;">
-        <span class="kind" style="display:block;font-family:var(--sans);font-size:.66rem;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--c-cyan);">Also from Henaco</span>
-        <h3 style="margin-top:.3rem;">Table water, by the truckload</h3>
-        <p style="font-size:.88rem;color:var(--c-ink-soft);margin-top:.4rem;max-width:52ch;">
+    <div class="water-band reveal">
+      <div>
+        <span class="kind">Also from Henaco</span>
+        <h3>Table water, by the truckload</h3>
+        <p>
           Same factory, same standard. If you need water supply alongside your drinks order —
           for a shop, an event, or a standing weekly delivery — message us and we will quote you.
         </p>
@@ -267,7 +279,7 @@
 <!-- ============================================================
      WHY BUY DIRECT
      ============================================================ -->
-<section class="section" id="why">
+<section class="section section-deep" id="why">
   <div class="container">
     <div class="section-head center reveal">
       <span class="eyebrow">Why buy direct</span>
@@ -303,7 +315,7 @@
 <!-- ============================================================
      WHOLESALE TIERS
      ============================================================ -->
-<section class="section section-tint" id="wholesale">
+<section class="section section-cream" id="wholesale">
   <div class="container">
     <div class="section-head center reveal">
       <span class="eyebrow">Who we supply</span>
@@ -356,7 +368,7 @@
 <!-- ============================================================
      HOW TO ORDER
      ============================================================ -->
-<section class="section" id="order">
+<section class="section section-deep" id="order">
   <div class="container">
     <div class="order-layout">
       <div class="reveal">
@@ -419,7 +431,7 @@
 <!-- ============================================================
      DELIVERY
      ============================================================ -->
-<section class="section section-tint" id="delivery">
+<section class="section section-cream" id="delivery">
   <div class="container">
     <div class="split">
       <div class="reveal">
@@ -451,7 +463,7 @@
 <!-- ============================================================
      FAQ
      ============================================================ -->
-<section class="section" id="faq">
+<section class="section section-deep" id="faq">
   <div class="container">
     <div class="section-head center reveal">
       <span class="eyebrow">Before you message</span>
@@ -495,7 +507,7 @@
 <!-- ============================================================
      FINAL CTA
      ============================================================ -->
-<section class="cta-strip reveal">
+<section class="cta-strip on-dark reveal">
   <span class="eyebrow">Stop leaving money with the middleman</span>
   <h2>Your next carton should come <span class="glow">from the factory</span></h2>
   <p>
@@ -514,10 +526,11 @@
 <!-- ============================================================
      FOOTER
      ============================================================ -->
-<footer class="foot">
+<footer class="foot on-dark">
   <div class="container">
     <div class="foot-grid">
       <div class="foot-brand">
+        <img src="images/brand/henaco-mark-light.webp" alt="" width="132" height="276">
         <strong>HENACO BEVERAGES (NIG.) LTD</strong>
         <p>
           Blenders and bottlers of brandy, rum, schnapps, liqueurs and table water —

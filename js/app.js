@@ -81,7 +81,10 @@
   }
 
   function initVortex() {
-    var hero = document.querySelector(".hero");
+    /* the dark panel the tunnel lives in — the bottles are measured
+       and clipped against this, not the whole hero */
+    var hero = document.querySelector(".hero-visual");
+    if (!hero) return;
 
     var glow = document.createElement("div");
     glow.className = "portal-glow";
@@ -110,9 +113,18 @@
       var r = hero.getBoundingClientRect();
       W = r.width;
       H = r.height;
+      /* cache each bottle's half-size so the frame loop never reads
+         layout — the CSS width changes across breakpoints */
+      for (var i = 0; i < flyers.length; i++) {
+        flyers[i].hw = flyers[i].el.offsetWidth / 2 || 75;
+        flyers[i].hh = flyers[i].el.offsetHeight / 2 || 150;
+      }
     }
     measure();
     window.addEventListener("resize", measure, { passive: true });
+    /* the panel is grid-sized, so it can change without a window resize */
+    if ("ResizeObserver" in window) new ResizeObserver(measure).observe(hero);
+    flyers.forEach(function (f) { f.el.addEventListener("load", measure); });
 
     /* only animate while the hero is actually on screen */
     var visible = true;
@@ -168,15 +180,16 @@
       glow.style.opacity = pulse.toFixed(3);
 
       /* how far out a bottle begins its run */
-      var reach = Math.max(W, H) * 0.8;
+      var reach = Math.max(W, H) * 0.62;
 
       for (var i = 0; i < flyers.length; i++) {
         var fl = flyers[i];
         var age = (((vt - fl.start) % LIFE) + LIFE) % LIFE;
         var p = age / LIFE;
 
-        /* ease-in cubic: it drifts, then the tunnel snatches it */
-        var e = p * p * p;
+        /* eased pull — gentler than cubic so the bottles spread out
+           along the run instead of bunching up at the panel rim */
+        var e = Math.pow(p, 2.3);
         var dist = reach * (1 - e);
 
         /* a slow curl on the way in */
@@ -190,7 +203,7 @@
 
         fl.el.style.opacity = (op * 0.95).toFixed(3);
         fl.el.style.transform =
-          "translate3d(" + (x - 95).toFixed(1) + "px," + (y - 190).toFixed(1) + "px,0)" +
+          "translate3d(" + (x - fl.hw).toFixed(1) + "px," + (y - fl.hh).toFixed(1) + "px,0)" +
           " rotate(" + (fl.spin * p).toFixed(2) + "deg)" +
           " scale(" + scale.toFixed(4) + ")";
       }
