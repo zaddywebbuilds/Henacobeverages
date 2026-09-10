@@ -233,7 +233,7 @@ h1, h2, h3, h4 {
   border-radius: 999px;
   padding: .5rem .95rem;
   font-size: .76rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--c-ink);
   box-shadow: var(--sh-soft);
   transition: background .25s, color .25s, transform .25s;
@@ -1216,3 +1216,53 @@ body.age-locked { overflow: hidden; }
 }
 .why.has-media h3,
 .why.has-media p { padding-inline: 1.5rem; }
+
+/* ============================================================
+   CONTAINMENT — the page never scrolls sideways, on any device
+   ------------------------------------------------------------
+   overflow-x on <body> alone is not enough: if the viewport itself
+   is the scroll container, a wide child still drags the page. Clip
+   on the root, and give every element that can exceed its box an
+   explicit ceiling.
+   ============================================================ */
+html {
+  max-width: 100%;
+  overflow-x: clip;              /* clip beats hidden: no scroll container */
+}
+@supports not (overflow: clip) {
+  html { overflow-x: hidden; }
+}
+body { max-width: 100%; overflow-x: clip; }
+@supports not (overflow: clip) {
+  body { overflow-x: hidden; }
+}
+
+/* nothing may out-grow its column */
+img, video, svg, iframe, table, figure { max-width: 100%; }
+/* long words / URLs / product codes cannot push a card wide */
+h1, h2, h3, h4, p, li, a, address, summary, span, b, em, small {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+/* grid and flex children default to min-content width; let them shrink */
+.grid > *, .hero-stage > *, .pp-stage > *, .pp-cols > *,
+.split > *, .order-layout > *, .foot-grid > * { min-width: 0; }
+
+/* the marquee is deliberately wider than the screen — it must clip,
+   never scroll the page */
+.marquee { max-width: 100vw; }
+
+/* absolutely-positioned decoration must not extend the page box */
+.hero, .hero-visual, .cta-strip, .section { max-width: 100%; }
+
+/* very small phones (320px and down) */
+@media (max-width: 360px) {
+  .container { width: calc(100% - 1.6rem); }
+  .hero-bar  { width: calc(100% - 1.6rem); }
+  .hero-stage { width: calc(100% - 1.6rem); }
+  .crumbs, .pp-stage { width: calc(100% - 1.6rem); }
+  .hero-body h1 { font-size: 2rem; }
+  .prod-spec b { font-size: .6rem; }
+  .mobile-bar .btn { font-size: .78rem; padding: .75rem .6rem; }
+  .hero-proof { grid-template-columns: 1fr; }
+}

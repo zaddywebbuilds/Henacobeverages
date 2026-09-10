@@ -23,7 +23,9 @@ images/brand/*.webp     Henaco logo mark, lifted off the company banner
 images/products/*.webp  bottles cut out to transparent PNG->WebP
 images/scenes/*.webp    the company banner + "Refresh Your Moment" posters
 images/raw/             the original phone photos + full-size PNG cutouts
-video/hero-vortex.mp4   compressed hero loop (2.7 MB, was 19.8 MB)
+video/hero-vortex.mp4   desktop hero loop, 540x960 / 20s (2.7 MB)
+video/hero-vortex-mobile.mp4  phone hero loop, 360x640 / 10s (625 KB)
+video/delivery-van.mp4  the real van, 5s tracking shot (260 KB)
 video/holetrack.json    tracked vanishing point of the video, for reference
 ```
 
@@ -38,6 +40,28 @@ the pitch sits on the **right**. The flying bottles are clipped inside that pane
 so they can never wash across the copy. Below 1050px the two stack, copy first.
 
 All body text passes WCAG AA contrast (>=4.5:1) on the cream ground.
+
+## Speed
+
+Mobile loads **713 KB total** and the load event fires at ~93ms, because:
+
+- phones get a 360x640 / 10s hero encode (625 KB) instead of the
+  540x960 / 20s desktop one (2.7 MB) — picked in `startVideo()`;
+- the video fetch waits for `load` **then** browser idle, so it never
+  competes with first paint;
+- Save-Data or 2G skips the video entirely and keeps the poster;
+- the delivery-van card clip only loads when scrolled into view;
+- 5 font faces instead of 7.
+
+Don't bother minifying the CSS/JS: GitHub Pages already gzips them to
+9 KB and 6 KB. The video is the only weight that matters.
+
+## Containment
+
+The page cannot scroll sideways on any device. `overflow-x: clip` on
+both `html` and `body` (with an `overflow: hidden` fallback), plus
+`min-width: 0` on every grid/flex child and `overflow-wrap` on text.
+Verified with `scrollWidth === clientWidth` at 320, 360, 375 and 768.
 
 ## The hero animation
 

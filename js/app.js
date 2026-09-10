@@ -213,15 +213,35 @@
     startVideo();
   }
 
-  /* Nigerian mobile data is not free. Respect Save-Data and obviously
-     slow connections — those visitors just keep the poster image. */
+  /* Nigerian mobile data is not free.
+     - Save-Data or 2G: never fetch the video at all, keep the poster.
+     - Phones get a 360x640 / 10s encode (625 KB) instead of the
+       540x960 / 20s desktop one (2.7 MB).
+     - Either way the fetch waits until the page has loaded and the
+       browser is idle, so the video never competes with first paint. */
   function startVideo() {
     if (!video) return;
     var c = navigator.connection || {};
     if (c.saveData === true || /(^|-)2g$/.test(c.effectiveType || "")) return;
-    video.preload = "auto";
-    video.load();
-    video.play().catch(function () {});
+
+    var small = window.matchMedia("(max-width: 900px)").matches ||
+                (c.effectiveType || "") === "3g";
+    var src = small ? video.getAttribute("data-src-mobile")
+                    : video.getAttribute("data-src");
+    if (!src) return;
+
+    var go = function () {
+      video.src = src;
+      video.preload = "auto";
+      video.load();
+      video.play().catch(function () {});
+    };
+    var idle = function () {
+      if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 1800 });
+      else setTimeout(go, 450);
+    };
+    if (document.readyState === "complete") idle();
+    else window.addEventListener("load", idle, { once: true });
   }
 
   /* ---------- 3. PRODUCT CARD TILT ------------------------ */

@@ -23,7 +23,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/theme.css" />
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -116,11 +116,11 @@
          so they never wash across the copy. -->
     <div class="hero-visual">
       <video class="hero-video" id="heroVideo"
-             autoplay muted loop playsinline preload="none"
+             muted loop playsinline preload="none"
              poster="video/hero-vortex-poster.jpg"
-             aria-hidden="true" tabindex="-1">
-        <source src="video/hero-vortex.mp4" type="video/mp4">
-      </video>
+             data-src="video/hero-vortex.mp4"
+             data-src-mobile="video/hero-vortex-mobile.mp4"
+             aria-hidden="true" tabindex="-1"></video>
       <div class="portal-layer" id="portalLayer" aria-hidden="true"></div>
     </div>
 
