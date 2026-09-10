@@ -983,6 +983,10 @@ h1, h2, h3, h4 {
    AGE GATE — 18+ confirmation
    Content stays in the DOM behind it so crawlers still index.
    ============================================================ */
+/* An author `display` beats the browser's own [hidden] rule, so the
+   gate must opt back out explicitly — without this it never closes. */
+.age-gate[hidden] { display: none !important; }
+
 .age-gate {
   position: fixed;
   inset: 0;
