@@ -1,0 +1,13 @@
+# Full-size PNG cutouts — regenerable from images/raw/*.jpg with rembg,
+# and redundant with the WebP files the site actually serves (~4.5 MB).
+images/raw/cutouts-png/
+
+# Local preview server config
+.claude/
+
+# OS / editor noise
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*.swp
