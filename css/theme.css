@@ -312,7 +312,7 @@ h1, h2, h3, h4 {
 
 .flyer {
   position: absolute; top: 0; left: 0;
-  width: 132px;
+  width: 132px;   /* JS re-sizes this to ~20% of the panel */
   transform-origin: 50% 50%;
   will-change: transform, opacity;
   filter: drop-shadow(0 16px 30px rgba(0,0,0,.6));
@@ -948,7 +948,7 @@ h1, h2, h3, h4 {
   .brandmark-txt strong { font-size: .82rem; letter-spacing: .04em; }
   .hero-body h1 { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
   .hero-visual { aspect-ratio: 1 / 1; max-height: 42vh; border-radius: var(--r-lg); }
-  .flyer { width: 100px; }
+  .flyer { width: 68px; }
   .hero-proof { font-size: .7rem; text-align: left; }
 
   .mobile-bar { display: flex; }
@@ -1265,4 +1265,80 @@ h1, h2, h3, h4, p, li, a, address, summary, span, b, em, small {
   .prod-spec b { font-size: .6rem; }
   .mobile-bar .btn { font-size: .78rem; padding: .75rem .6rem; }
   .hero-proof { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   TOUCH — this site is overwhelmingly used on phones
+   ------------------------------------------------------------
+   Every tappable thing gets a 44px hit area, and the micro-caps
+   labels come up to a size that is actually readable at arm's
+   length on a handset.
+   ============================================================ */
+@media (max-width: 900px) {
+
+  /* ---- 44px hit areas ---- */
+  .glass-chip { min-height: 44px; padding-block: .6rem; }
+  .glass-icon-btn { width: 44px; height: 44px; }
+  .btn, .btn-sm { min-height: 46px; }
+  .prod h3 a.prod-link {
+    display: inline-block;
+    padding: .35rem 0;
+  }
+  .prod-more {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: .2rem;
+  }
+  .foot li a,
+  .foot address a,
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .faq-item summary { min-height: 52px; display: flex; align-items: center; }
+  .mobile-bar .btn { min-height: 48px; }
+
+  /* ---- readable micro-labels ---- */
+  .eyebrow { font-size: .72rem; letter-spacing: .18em; }
+  .prod .kind, .pp-body .kind, .water-band .kind { font-size: .72rem; }
+  .tier .who { font-size: .74rem; }
+  .prod-spec b { font-size: .7rem; }
+  .prod-tag { font-size: .64rem; }
+  .rel-kind { font-size: .66rem; }
+  .stat span { font-size: .72rem; }
+  .hero-proof { font-size: .74rem; }
+  .brandmark-txt small { font-size: .68rem; letter-spacing: .2em; }
+  .marquee-track span { font-size: .8rem; }
+  .foot-bottom { font-size: .8rem; }
+
+  /* stop iOS blue-flashing every tap */
+  a, button { -webkit-tap-highlight-color: rgba(23, 99, 214, .12); }
+}
+
+/* hover effects must not stick on touch, where there is no pointer
+   to move away afterwards */
+@media (hover: none) {
+  .prod:hover .prod-media img,
+  .why.has-media:hover .why-media img,
+  .why.has-media:hover .why-media video { transform: none; }
+  .btn:hover, .why:hover, .tier:hover, .rel-card:hover { transform: none; }
+}
+
+@media (max-width: 900px) {
+  /* card titles need the full 44px, not 35 */
+  .prod h3 a.prod-link { padding: .72rem 0; }
+  /* phone / WhatsApp links written inline in prose are tap targets too */
+  .faq-a a, .pp-prose a, .step p a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  /* the last of the sub-11px labels */
+  .prod-tag { font-size: .7rem; padding: .34rem .68rem; }
+  .tier-badge { font-size: .74rem; padding: .32rem .95rem; }
+  .age-card small { font-size: .78rem; }
+  .bub small { font-size: .68rem; }
+  .wa-name small { font-size: .74rem; }
 }

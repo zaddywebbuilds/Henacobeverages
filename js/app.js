@@ -108,16 +108,30 @@
       };
     });
 
-    var W = 0, H = 0;
+    var W = 0, H = 0, active = flyers.length;
     function measure() {
       var r = hero.getBoundingClientRect();
       W = r.width;
       H = r.height;
-      /* cache each bottle's half-size so the frame loop never reads
-         layout — the CSS width changes across breakpoints */
+      if (!W) return;
+      /* Size the bottles off the PANEL, not off a fixed px value.
+         On a 335px phone panel a fixed 100px bottle is a third of the
+         frame — it fills the panel, clips on every edge and barely
+         appears to travel. Proportional keeps the flight readable at
+         any size. Fewer of them in flight on a small panel, too. */
+      var fw = Math.max(40, Math.min(150, Math.round(W * 0.2)));
+      active = W < 430 ? 5 : flyers.length;
       for (var i = 0; i < flyers.length; i++) {
-        flyers[i].hw = flyers[i].el.offsetWidth / 2 || 75;
-        flyers[i].hh = flyers[i].el.offsetHeight / 2 || 150;
+        var fl = flyers[i];
+        fl.el.style.width = fw + "px";
+        if (i >= active) {
+          fl.el.style.display = "none";
+          fl.el.style.opacity = "0";
+        } else {
+          fl.el.style.display = "";
+        }
+        fl.hw = fl.el.offsetWidth / 2 || fw / 2;
+        fl.hh = fl.el.offsetHeight / 2 || fw;
       }
     }
     measure();
@@ -160,31 +174,43 @@
     }
 
     var t0 = performance.now();
+    var lastVT = -1, lastHoleT = 0;
 
     function frame(now) {
       requestAnimationFrame(frame);
       if (!visible || !W) return;
 
-      /* Drive off the video clock whenever it is really playing, so the
-         bottles stay glued to the tunnel; fall back to wall time if the
-         video never started (blocked autoplay, save-data, etc). */
-      var vt = (video.readyState > 2 && !video.paused && !video.ended)
-        ? video.currentTime
-        : (now - t0) / 1000;
-
-      var hole = holeAt(vt);
+      /* Two clocks on purpose.
+         The HOLE must follow the video frame, so it uses video time —
+         but only while that time is actually advancing.
+         The BOTTLES use wall time, always. On a slow connection the
+         video stalls while buffering and currentTime stops dead; if the
+         bottles shared that clock they would freeze mid-air, which is
+         exactly what "the drinks are not going in" looks like. */
+      var wall = (now - t0) / 1000;
+      var live = video.readyState > 2 && !video.paused && !video.ended;
+      if (live && video.currentTime !== lastVT) {
+        lastVT = video.currentTime;
+        lastHoleT = video.currentTime;
+      } else if (!live) {
+        lastHoleT = wall;
+      }
+      var hole = holeAt(lastHoleT);
+      var vt = wall;
 
       /* the mouth glow, breathing */
-      var pulse = 0.45 + 0.2 * Math.sin(vt * 2.1);
+      var pulse = 0.45 + 0.2 * Math.sin(wall * 2.1);
       glow.style.transform = "translate3d(" + hole.x.toFixed(1) + "px," + hole.y.toFixed(1) + "px,0) scale(" + (0.85 + pulse * 0.5).toFixed(3) + ")";
       glow.style.opacity = pulse.toFixed(3);
 
       /* how far out a bottle begins its run */
-      var reach = Math.max(W, H) * 0.62;
+      var reach = Math.max(W, H) * 0.78;
 
-      for (var i = 0; i < flyers.length; i++) {
+      for (var i = 0; i < active; i++) {
         var fl = flyers[i];
-        var age = (((vt - fl.start) % LIFE) + LIFE) % LIFE;
+        /* re-stagger against however many are actually in flight */
+        var start = i * (LIFE / active);
+        var age = (((vt - start) % LIFE) + LIFE) % LIFE;
         var p = age / LIFE;
 
         /* eased pull — gentler than cubic so the bottles spread out
