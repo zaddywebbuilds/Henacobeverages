@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zaddywebbuilds.github.io/Henacobeverages/sitemap.xml
+Sitemap: https://henacobeverages.com/sitemap.xml
